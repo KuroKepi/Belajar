@@ -17,6 +17,45 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+	<script>
+		$(document).ready(function(e){
+			$('#form').submit(function(e){
+				// Swal.fire('anjir');
+				$.ajax({
+					url			: $(this).attr('action'),
+					data 		: $(this).serialize(),
+					type		: 'post',
+					dataType	: 'JSON',
+					cache 		: false,
+					beforeSend	: function()
+					{
+						$('.simpan').attr('disabled','disabled');
+						$('.simpan').html('<i class="fa fa-spin fa-spinner"></i> proses');
+
+					},
+					complete	: function()
+					{
+						$('.simpan').removeAttr('disabled');
+						$('.simpan').html('<i class="fa fa-add"></i> Add');
+					},
+					// error		: function(e)
+					// {
+					// 	Swal.fire('Error', e,'error');
+					// },
+					success		: function(data)
+					{
+						console.log('data');
+						if(data.validasi)
+						{
+							$('.pesan').fadeIn();
+							$('.pesan').html(data.validasi);
+						}
+					}
+				})
+				return false;
+			})
+		});
+	</script>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
